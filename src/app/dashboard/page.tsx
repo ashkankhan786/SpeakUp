@@ -25,6 +25,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import Navbar from "./_components/Navbar";
 function Dashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -112,76 +113,65 @@ function Dashboard() {
   };
 
   return (
-    <div className="w-screen p-4 px-7 md:px-14 lg:px-28 ">
-      <div className="flex justify-between items-center mb-6 ">
-        <h1 className="text-2xl font-bold">Your Organizations</h1>
-        <div className="space-x-2">
-          <Button onClick={() => router.push("/create-organization")}>
-            Create Organization
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => signOut({ callbackUrl: "/" })}
-          >
-            Logout
-          </Button>
-        </div>
+    <div className="w-screen relative">
+      <Navbar />
+      <div className="w-full px-4 md:px-8 lg:px-14">
+        <h1 className="text-2xl font-bold mb-3">Your Organizations</h1>
+        {organizations === undefined ? (
+          <p>Loading...</p>
+        ) : organizations?.length === 0 || organizations === null ? (
+          <p className="text-gray-500">No organizations created yet.</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {organizations?.map((org) => (
+              <div
+                key={org._id}
+                className="border p-4 rounded-md hover:shadow-md transition flex flex-col gap-2"
+              >
+                <div className="flex justify-between items-center">
+                  <h2
+                    className="text-xl font-semibold cursor-pointer"
+                    onClick={() => handleOrgClick(org)}
+                  >
+                    {org.title}
+                  </h2>
+                  <AlertDialog>
+                    <AlertDialogTrigger>
+                      <Trash2 size={20} />
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you absolutely sure?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently
+                          delete your organization and all the incidents
+                          reported in it.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => handleOrganizationDelete(org)}
+                        >
+                          Continue
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
+                <div className="flex justify-between items-center">
+                  <p className="text-gray-500 text-sm">Type: {org.type}</p>
+                  <p className="text-gray-500 text-sm">
+                    Access Code : {org.accessCode}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-
-      {organizations === undefined ? (
-        <p>Loading...</p>
-      ) : organizations?.length === 0 || organizations === null ? (
-        <p className="text-gray-500">No organizations created yet.</p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {organizations?.map((org) => (
-            <div
-              key={org._id}
-              className="border p-4 rounded-md cursor-pointer hover:shadow-md transition flex flex-col gap-2"
-            >
-              <div className="flex justify-between items-center">
-                <h2
-                  className="text-xl font-semibold"
-                  onClick={() => handleOrgClick(org)}
-                >
-                  {org.title}
-                </h2>
-                <AlertDialog>
-                  <AlertDialogTrigger>
-                    <Trash2 size={20} />
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Are you absolutely sure?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete your organization and all the incidents reported
-                        in it.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction
-                        onClick={() => handleOrganizationDelete(org)}
-                      >
-                        Continue
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </div>
-              <div className="flex justify-between items-center">
-                <p className="text-gray-500 text-sm">Type: {org.type}</p>
-                <p className="text-gray-500 text-sm">
-                  Access Code : {org.accessCode}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
 
       {isClient && (
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
