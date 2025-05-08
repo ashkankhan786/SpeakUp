@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SpeakUp — Empowering Safer Work and Study Environments.
 
-## Getting Started
+**SpeakUp** is a web-based application built with **Next.js** and **Convex** that enables users to anonymously report incidents (such as harassment or misconduct) within their organization — whether it’s a **college**, **school**, or **company**. The goal is to create safer and more supportive environments by giving individuals a secure and private way to share their experiences.
 
-First, run the development server:
+## 🎯 Objective
+
+To empower students, employees, and members of any organization to **safely report incidents** — especially those related to **harassment**, **abuse**, or **misconduct** — **anonymously**, without fear or discomfort. This platform is especially focused on supporting women who face harassment from colleagues or seniors and may not feel safe speaking up in person.
+
+---
+
+## 🧩 Features
+
+- ✅ **Create Organizations**: Admins can create an organization and generate access codes for private entry.
+- 🔐 **Access via Code**: Users join organizations using an access code shared by the admin.
+- 🙈 **Anonymous Reporting**: Victims can report incidents without disclosing their identity.
+- 📎 **Evidence Upload**: Reporters can optionally attach files (images, documents, etc.) as proof.
+- 📝 **Optional Identity**: Users can choose to provide their name or stay anonymous.
+- 🔄 **Real-time Data**: All interactions are handled seamlessly with real-time updates via Convex.
+- 🎨 **Clean UI**: Built with Tailwind CSS and shadcn/ui for a modern, accessible interface.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer        | Tech Used              |
+|--------------|------------------------|
+| Frontend     | Next.js (App Router), React |
+| Backend      | Convex (Serverless + Real-time) |
+| Auth         | next-auth              |
+| Styling      | Tailwind CSS, shadcn/ui |
+| UI Elements  | React Icons            |
+| Storage      | Convex File Storage  |
+
+---
+
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/ashkankhan786/SpeakUp.git
+cd SpeakUp
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Create .env.local
+```bash
+CONVEX_DEPLOYMENT=
+NEXT_PUBLIC_CONVEX_URL=your-convex-deployment-url
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+GITHUB_ID=your-github-id
+GITHUB_SECRET=your-github-secret
 
-## Learn More
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
 
-To learn more about Next.js, take a look at the following resources:
+NEXTAUTH_URL=your-next-auth-url
+NEXTAUTH_SECRET=your-next-auth-secret
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4. Start the dev server
+```bash
+npm run dev
+```
