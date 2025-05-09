@@ -24,7 +24,6 @@ export const createOrganizationMembership = mutation({
     const id = await ctx.db.insert("organization_membership", {
       organizationId: args.organizationId,
       adminId: args.adminId,
-      createdAt: Date.now(),
     });
     return id;
   },

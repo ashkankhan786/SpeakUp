@@ -8,7 +8,7 @@ function Hero() {
     <>
       <section className="flex flex-col md:flex-row items-center px-7 justify-center gap-10 md:gap-0 pb-5 pt-4">
         <div className="flex flex-col items-center justify-center text-center  lg:px-8 md:px-0 px-0">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mt-20 tracking-tighter lg:tracking-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mt-20 tracking-tight lg:tracking-tight">
             SPEAK UP, STAY SAFE.
           </h1>
           <p className="mt-6 text-base md:text-lg text-gray-700 max-w-2xl">
@@ -40,12 +40,12 @@ function Hero() {
       </section>
       <div className="w-screen mt-14 md:flex gap-6 hidden items-center justify-center">
         <Link href="/create-organization">
-          <button className="px-6 py-3 bg-black text-white rounded-lg text-lg hover:bg-zinc-800 transition">
+          <button className="px-6 py-3 bg-black text-white rounded-lg text-lg hover:bg-zinc-100 transition">
             Create Organization
           </button>
         </Link>
         <Link href="/find-organization">
-          <button className="px-6 py-3 border border-black text-black rounded-lg text-lg hover:bg-zinc-900 hover:text-white transition">
+          <button className="px-6 py-3 border border-black text-black rounded-lg text-lg hover:bg-zinc-100 hover:text-white transition">
             Find Your Organization
           </button>
         </Link>

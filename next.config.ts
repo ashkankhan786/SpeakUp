@@ -2,7 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["striped-cheetah-14.convex.cloud"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "striped-cheetah-14.convex.cloud",
+      },
+    ],
   },
 };
 

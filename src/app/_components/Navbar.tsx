@@ -1,17 +1,12 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import { BiSearch } from "react-icons/bi";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-function Navbar({
-  searchText,
-  setSearchText,
-}: {
-  searchText: string;
-  setSearchText: React.Dispatch<React.SetStateAction<string>>;
-}) {
+import { Button } from "@/components/ui/button";
+function Navbar() {
   const router = useRouter();
+  const { data: session, status } = useSession();
   return (
     <nav className="w-screen px-8 py-4 shadow-md relative flex items-center justify-between">
       <div className="w-3">
@@ -26,15 +21,26 @@ function Navbar({
       </div>
       <div className="flex items-center justify-center gap-3">
         <div className="flex items-center justify-center gap-3">
-          <button
-            className="px-4 py-2 bg-black text-white rounded-md hover:bg-zinc-800 transition cursor-pointer text-nowrap"
+          <Button
+            variant="outline"
+            className="cursor-pointer bg-zinc-100 text-black hover:border-gray-300 hover:bg-zinc-50 transition ease-in"
+            onClick={() => {
+              if (status === "authenticated") {
+                router.push("/dashboard");
+              } else {
+                signIn(undefined, { callbackUrl: "/dashboard" });
+              }
+            }}
+          >
+            Dashboard
+          </Button>
+          <Button
+            variant="default"
+            className=" cursor-pointer "
             onClick={() => signIn(undefined, { callbackUrl: "/dashboard" })}
           >
             Log in
-          </button>
-          <button className="px-4 py-2 bg-black text-white rounded-md hover:bg-zinc-800 transition cursor-pointer text-nowrap">
-            Sign up
-          </button>
+          </Button>
         </div>
       </div>
     </nav>

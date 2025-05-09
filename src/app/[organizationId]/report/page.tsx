@@ -14,21 +14,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Id } from "../../../../convex/_generated/dataModel";
+import { Organizations } from "@/app/find-organization/page";
 
-export interface Organization {
-  _id: string;
-  name: string;
-  type: string;
-  accessCode: string;
-  createdAt: number;
-}
 const ReportPage = () => {
   const params = useParams();
-  const orgId: any = params.organizationId;
+  const orgId = params.organizationId as Id<"organizations">;
   const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
-  const [accusedName, setAccusedName] = useState("");
-  const [victimName, setVictimName] = useState("");
+  const [location, setLocation] = useState<string>("");
+  const [accusedName, setAccusedName] = useState<string>("");
+  const [victimName, setVictimName] = useState<string>("");
   const [evidenceFiles, setEvidenceFiles] = useState<FileList | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
@@ -36,15 +31,15 @@ const ReportPage = () => {
   const router = useRouter();
 
   const organization = useQuery(api.organizations.getOrganizationById, {
-    organizationId: orgId,
-  }) as Organization | null;
+    organizationId: orgId as Id<"organizations">,
+  }) as Organizations | null;
 
   const uploadEvidence = useMutation(api.incidents.uploadEvidence);
   const reportIncident = useMutation(api.incidents.reportIncident);
 
   const handleSubmit = async () => {
     setLoading(true);
-    let evidenceFileIds: any[] = [];
+    let evidenceFileIds: Id<"_storage">[] = [];
     try {
       if (evidenceFiles && evidenceFiles.length > 0) {
         const uploadUrl: string = await uploadEvidence();
@@ -57,7 +52,7 @@ const ReportPage = () => {
             body: file,
           });
           if (!res.ok) throw new Error("Upload failed");
-          const { storageId } = await res.json();
+          const { storageId }: { storageId: Id<"_storage"> } = await res.json();
           return storageId;
         });
 
@@ -98,7 +93,7 @@ const ReportPage = () => {
   return (
     <div className="max-w-3xl mx-auto p-6 space-y-4">
       <h1 className="text-2xl font-bold text-center">
-        Report Incident for Org: {organization?.name}
+        Report Incident for Org: {organization?.title}
       </h1>
 
       <div className="space-y-2">

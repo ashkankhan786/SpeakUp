@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import Navbar from "./_components/Navbar";
 import Hero from "./_components/Hero";
 import Working from "./_components/Working";

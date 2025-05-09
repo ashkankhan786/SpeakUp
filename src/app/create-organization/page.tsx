@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
 import { api } from "../../../convex/_generated/api";
 
-function page() {
+function CreateOrganization() {
   const [name, setName] = useState<string>("");
   const [type, setType] = useState<string>("");
   const [accessCode, setAccessCode] = useState<string>("");
@@ -53,13 +53,15 @@ function page() {
             router.push("/dashboard");
           })
           .catch((error) => {
+            console.log("Error", error);
+
             toast.error(
               "Failed to create organization membership. Please try again."
             );
           });
       })
       .catch((error) => {
-        console.log("Error while creating organization");
+        console.log("Error while creating organization", error);
         toast.error("Failed to create organization. Please try again.");
       });
   };
@@ -87,6 +89,7 @@ function page() {
           width={100}
           height={100}
           className="mix-blend-multiply absolute -top-2 left-3"
+          onClick={() => router.push("/")}
         />
       </div>
       <div>
@@ -147,4 +150,4 @@ function page() {
   );
 }
 
-export default page;
+export default CreateOrganization;

@@ -12,7 +12,6 @@ export const createOrganization = mutation({
       title: args.title,
       type: args.type,
       accessCode: args.accessCode,
-      createdAt: Date.now(),
     });
     return orgId;
   },

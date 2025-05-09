@@ -5,15 +5,23 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { Id } from "../../../convex/_generated/dataModel";
 import Navbar from "./_components/Navbar";
+import { Id } from "../../../convex/_generated/dataModel";
 
-function page() {
-  const [orgs, setOrgs] = useState<any[] | undefined>([]);
+export interface Organizations {
+  _id: Id<"organizations">;
+  title: string;
+  type: string;
+  accessCode: string;
+  _creationTime: Date;
+}
+
+function FindOrganization() {
+  const [orgs, setOrgs] = useState<Organizations[] | undefined>([]);
   const [searchText, setSearchText] = useState<string>("");
   const [accessCode, setAccessCode] = useState<{ [key: string]: string }>({});
   const router = useRouter();
-  const organizations: any[] | undefined = useQuery(
+  const organizations: Organizations[] | undefined = useQuery(
     api.organizations.getOrganizations,
     {}
   );
@@ -31,8 +39,8 @@ function page() {
       setOrgs(organizations);
       return;
     }
-    const filteredOrg: any[] = organizations?.filter(
-      (org) => org?.title.toLowerCase().indexOf(searchText.toLowerCase()) != -1
+    const filteredOrg: Organizations[] | undefined = organizations?.filter(
+      (org) => org.title.toLowerCase().indexOf(searchText.toLowerCase()) != -1
     );
     setOrgs(filteredOrg);
     console.log("filtered");
@@ -86,4 +94,4 @@ function page() {
   );
 }
 
-export default page;
+export default FindOrganization;

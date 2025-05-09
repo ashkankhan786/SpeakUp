@@ -25,7 +25,6 @@ export const reportIncident = mutation({
       location: args.location,
       accusedName: args.accusedName,
       reporterName: args.reporterName ?? null,
-      createdAt: Date.now(),
       evidenceFiles: args.evidenceFiles ?? [],
       status: "pending",
     });

@@ -35,15 +35,12 @@ function Navbar({
             onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
-        <div className="flex items-center justify-center gap-3">
+        <div className="flex items-center justify-end gap-3">
           <button
             className="px-4 py-2 bg-black text-white rounded-md hover:bg-zinc-800 transition cursor-pointer text-nowrap"
             onClick={() => signIn(undefined, { callbackUrl: "/dashboard" })}
           >
             Log in
-          </button>
-          <button className="px-4 py-2 bg-black text-white rounded-md hover:bg-zinc-800 transition cursor-pointer text-nowrap">
-            Sign up
           </button>
         </div>
       </div>

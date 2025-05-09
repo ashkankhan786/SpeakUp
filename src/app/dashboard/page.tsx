@@ -1,14 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -26,11 +24,25 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import Navbar from "./_components/Navbar";
+import { Organizations } from "../find-organization/page";
+
+export interface Incident {
+  _id: Id<"incidents">;
+  accusedName: string;
+  description: string;
+  evidenceFiles?: [];
+  location: string;
+  organizationId: Id<"organizations">;
+  reporterName?: string;
+  status: "Pending" | "Reviewed";
+  _creationTime: Date;
+}
+
 function Dashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  const [selectedOrg, setSelectedOrg] = useState<any | null>(null);
+  const [selectedOrg, setSelectedOrg] = useState<Organizations | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [adminId, setAdminId] = useState<string>("");
   const [isClient, setIsClient] = useState<boolean>(false);
@@ -60,17 +72,19 @@ function Dashboard() {
           email: session.user.email,
         });
         setAdminId(newUserId);
+        console.log("User id :", newUserId);
       } catch (error) {
         console.log("Error creating admin:", error);
       }
     };
     createAdminIfNotExists();
-  }, [session, createAdmin, adminId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session, createAdmin]);
 
   const organizationsIds = useQuery(
     api.organization_membership.getOrganizationsByAdminId,
     { adminId: adminId }
-  );
+  ) as Id<"organizations">[] | undefined;
   useEffect(() => {
     console.log("Organizations IDs:", organizationsIds);
   }, [organizationsIds]);
@@ -82,18 +96,18 @@ function Dashboard() {
           organizationIds: organizationsIds as Id<"organizations">[],
         }
       : "skip"
-  );
+  ) as Organizations[] | undefined;
 
   useEffect(() => {
     console.log("Organizations:", organizations);
   }, [organizations]);
 
-  const incidents: any[] | undefined = useQuery(
+  const incidents = useQuery(
     api.incidents.getIncidents,
     selectedOrg?._id ? { organizationId: selectedOrg._id } : "skip"
-  );
+  ) as Incident[] | undefined;
 
-  const handleOrgClick = (org: any) => {
+  const handleOrgClick = (org: Organizations) => {
     setSelectedOrg(org);
     setDialogOpen(true);
   };
@@ -102,7 +116,7 @@ function Dashboard() {
   const deleteMembership = useMutation(
     api.organization_membership.deleteOrganizationMembershipByOrgId
   );
-  const handleOrganizationDelete = (org: any) => {
+  const handleOrganizationDelete = (org: Organizations) => {
     deleteOrganization({
       organizationId: org._id,
     });
@@ -117,9 +131,9 @@ function Dashboard() {
       <Navbar />
       <div className="w-full px-4 md:px-8 lg:px-14">
         <h1 className="text-2xl font-bold mb-3">Your Organizations</h1>
-        {organizations === undefined ? (
+        {organizationsIds === undefined ? (
           <p>Loading...</p>
-        ) : organizations?.length === 0 || organizations === null ? (
+        ) : organizationsIds?.length === 0 || organizationsIds === null ? (
           <p className="text-gray-500">No organizations created yet.</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -178,7 +192,7 @@ function Dashboard() {
           <DialogContent className="w-[70vw] max-w-[70vw] h-[80vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle className="text-2xl font-bold mb-4">
-                Incidents in {selectedOrg?.name}
+                Incidents in {selectedOrg?.title}
               </DialogTitle>
               {incidents === undefined ? (
                 `Loading incidents...`

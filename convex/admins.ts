@@ -10,7 +10,7 @@ export const createAdmin = mutation({
   handler: async (ctx, args) => {
     const existingAdmin = await ctx.db
       .query("admins")
-      .filter((q) => q.eq(q.field("userId"), args.userId))
+      .filter((q) => q.eq(q.field("email"), args.email))
       .first();
 
     if (existingAdmin) {
@@ -20,7 +20,6 @@ export const createAdmin = mutation({
       userId: args.userId,
       name: args.name,
       email: args.email,
-      createdAt: Date.now(),
     });
     const newAdmin = await ctx.db.get(id);
     if (!newAdmin) {
