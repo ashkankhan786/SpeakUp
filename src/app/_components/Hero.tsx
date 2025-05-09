@@ -12,8 +12,9 @@ function Hero() {
             SPEAK UP, STAY SAFE.
           </h1>
           <p className="mt-6 text-base md:text-lg text-gray-700 max-w-2xl">
-            Empowering individuals to report incidents anonymously and protect
-            the dignity within organizations.
+            Empowering students, employees, and members of any organization to
+            safely report incidents — especially those related to harassment,
+            abuse, or misconduct — anonymously, without fear or discomfort.
           </p>
           <div className="mt-8 flex gap-6 md:hidden">
             <Link href="/create-organization">
