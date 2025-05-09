@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 function Navbar() {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   return (
     <nav className="w-screen px-8 py-4 shadow-md relative flex items-center justify-between">
       <div className="w-3">
