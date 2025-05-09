@@ -22,7 +22,7 @@ function Hero() {
               </button>
             </Link>
             <Link href="/find-organization">
-              <button className="px-6 py-3 border border-black text-black rounded-lg text-base hover:bg-zinc-900 hover:text-white transition">
+              <button className="px-6 py-3 border border-zinc-400 text-black rounded-lg text-base hover:bg-zinc-200 hover:border-gray-300 transition ease-in-out">
                 Find Your Organization
               </button>
             </Link>
@@ -40,12 +40,12 @@ function Hero() {
       </section>
       <div className="w-screen mt-14 md:flex gap-6 hidden items-center justify-center">
         <Link href="/create-organization">
-          <button className="px-6 py-3 bg-black text-white rounded-lg text-lg hover:bg-zinc-100 transition">
+          <button className="px-7 py-3 bg-black text-white rounded-lg text-base hover:bg-zinc-800 transition">
             Create Organization
           </button>
         </Link>
         <Link href="/find-organization">
-          <button className="px-6 py-3 border border-black text-black rounded-lg text-lg hover:bg-zinc-100 hover:text-white transition">
+          <button className="px-7 py-3 border border-zinc-400 text-black rounded-lg text-base hover:bg-zinc-200 hover:border-gray-300 transition ease-in-out">
             Find Your Organization
           </button>
         </Link>
